@@ -33,17 +33,10 @@ if __name__ == '__main__':
     d = .025
     #cmd.time     = [0.0, 0.4,  1.0, 1.1, 1.1+d,  1.2+d, 1.8+d, 2.2+d, 2.2+2*d]
 
-<<<<<<< HEAD
     dur = (float)(sys.argv[2]);
     # cmd.position = [-0.7,  1.2, -0.7]
     cmd.position = [-0.4,  1.0, -0.4]
     cmd.time_from_start = [0.0,  dur, dur+1.0]
-=======
-    dur = 29;
-    # cmd.position = [-0.7,  1.2, -0.7]
-    cmd.position = [-0.4, -0.3, 0.9, 1.0, -0.4]
-    cmd.time_from_start = [0.0, 2.0, dur-2.0, dur, dur+1.0]
->>>>>>> 1bc45fe8c21eb86ff830089e6276837e35e9b185
     cmd.time_from_start = [rospy.Duration.from_sec(x) for x in cmd.time_from_start]
     cmd.max_velocity = 10
     cmd.max_acceleration = 30
