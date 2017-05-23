@@ -8,12 +8,12 @@ from sensor_msgs.msg import PointCloud2
 roslib.load_manifest('laser_assembler')
 
 
-def callback(laser_scan_msg):
-    rospy.wait_for_service("assemble_scans2")
-    pub = rospy.Publisher("~output", PointCloud2, queue_size=10)
+global pub
+global assemble_scans2
 
+
+def callback(laser_scan_msg):
     try:
-        assemble_scans2 = rospy.ServiceProxy('assemble_scans2', AssembleScans2)
         response = assemble_scans2(rospy.Time(0,0), rospy.get_rostime())
         print "Got cloud with %u points" % len(response.cloud.data)
         pub.publish(response.cloud)
@@ -24,5 +24,8 @@ def callback(laser_scan_msg):
 if __name__ == '__main__':
     rospy.init_node("assemble_scans_client")
 
+    rospy.wait_for_service("assemble_scans2")
+    assemble_scans2 = rospy.ServiceProxy('assemble_scans2', AssembleScans2)
+    pub = rospy.Publisher("~output", PointCloud2, queue_size=10)
     sub = rospy.Subscriber('scan', LaserScan, callback)
     rospy.spin()
