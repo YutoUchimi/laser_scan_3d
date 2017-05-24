@@ -12,7 +12,6 @@ roslib.load_manifest('laser_assembler')
 global pub
 global assemble_scans2
 
-
 def callback(laser_scan_msg):
     try:
         response = assemble_scans2(rospy.get_rostime()-rospy.Duration(interval), rospy.get_rostime())
