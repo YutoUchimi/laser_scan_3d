@@ -1,27 +1,25 @@
 <launch>
   <!-- launch ROS service "laser_assembler" -->
   <node name="laser_assembler"
-        pkg="laser_assembler"
-        type="laser_scan_assembler" >
+        pkg="laser_assembler" type="laser_scan_assembler" >
     <remap from="scan" to="tilt_scan" />
-    <param name="max_scans" type="int" value="1200" />
-    <param name="fixed_frame" type="string" value="map" />
+    <param name="max_scans" value="1200" />
+    <param name="tf_cache_time_secs" value="10.0" />
+    <param name="fixed_frame" value="base_link" />
   </node>
 
   <node name="assemble_scans_client"
-        pkg="laser_scan_3d"
-        type="assemble_scans2.py">
+        pkg="laser_scan_3d" type="assemble_scans2.py"
+        args ="30.0" >
     <remap from="scan" to="tilt_scan"/>
   </node>
 
   <node name="laser_profile_commander"
-        pkg="laser_scan_3d"
-        type="my_robot_cal_tilt_profile.py"
-        args="laser_tilt_controller" />
+        pkg="laser_scan_3d" type="my_robot_cal_tilt_profile.py"
+        args="laser_tilt_controller 29" />
 
   <node name="rviz"
-        pkg="rviz"
-        type="rviz"
+        pkg="rviz" type="rviz"
         args="-d $(find laser_scan_3d)/rviz/pr2.rviz" />
 
 </launch>
