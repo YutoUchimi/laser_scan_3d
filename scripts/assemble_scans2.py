@@ -23,12 +23,15 @@ def callback(laser_scan_msg):
 
 
 if __name__ == '__main__':
+    global pub
+    global assemble_scans2
     if len(sys.argv) < 2:
         sys.exit(exit_code)
     else:
         interval = (float)(sys.argv[1])
     rospy.init_node("assemble_scans_client")
     rospy.wait_for_service("assemble_scans2")
+    rospy.sleep(interval)
     assemble_scans2 = rospy.ServiceProxy('assemble_scans2', AssembleScans2)
     pub = rospy.Publisher("~output", PointCloud2, queue_size=10)
     sub = rospy.Subscriber('scan', LaserScan, callback)
